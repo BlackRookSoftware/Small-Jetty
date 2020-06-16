@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<!-- ====================================================================== 
+     Black Rook Small Build File    
+     Matt Tropiano                                                                
+     ====================================================================== -->
+<project name="build" default="jar">
+
+	<description>Black Rook Small</description>
+
+	<property file="build.properties" />
+
+	<!-- Dependencies -->
+	<property name="dev.base" value=".." />
+	<property name="S" value="${path.separator}" />
+
+	<!-- Project Libs -->
+	<property name="jetty.lib.version" value="9.4.29.v20200521" />
+	<property name="jetty.jar" value="jetty-all-${jetty.lib.version}.jar" />
+	
+	<!-- Project Info -->
+	<property name="project.archive" value="blackrook-small-jetty" />
+	<property name="project.javadoc.title" value="Black Rook Small Jetty Bootstrap" />
+	<property name="project.classpath" value="${dev.base}/${jetty.jar}"/>
+	<property name="project.compiler.bootclasspath" value="" />
+	<property name="project.testclass" value=""/>
+	<property name="project.testclass.main" value=""/>
+	<property name="project.javadoc.packages" value="
+		com.blackrook.small.jetty
+		"
+	/>
+	
+	<import file="build-dependencies.xml" />
+	<import file="build-import.xml" />
+
+	<!--
+	<target name="dependency.small">
+		<maven-jar-dl group-path="javax/servlet" artifact="javax.servlet-api" version="${servlet.lib.version}" />
+		<maven-jar-sources-dl group-path="javax/servlet" artifact="javax.servlet-api" version="${servlet.lib.version}" />
+		<maven-jar-javadoc-dl group-path="javax/servlet" artifact="javax.servlet-api" version="${servlet.lib.version}" />
+	</target>
+	-->
+
+	<target name="dependency.jetty.websocket">
+		<!-- Common API -->
+		<maven-jar-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-api" version="${jetty.lib.version}" />
+		<maven-jar-sources-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-api" version="${jetty.lib.version}" />
+		<maven-jar-javadoc-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-api" version="${jetty.lib.version}" />
+		<!-- Common Core -->
+		<maven-jar-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-common" version="${jetty.lib.version}" />
+		<maven-jar-sources-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-common" version="${jetty.lib.version}" />
+		<maven-jar-javadoc-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-common" version="${jetty.lib.version}" />
+		<!-- Server -->
+		<maven-jar-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-server" version="${jetty.lib.version}" />
+		<maven-jar-sources-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-server" version="${jetty.lib.version}" />
+		<maven-jar-javadoc-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-server" version="${jetty.lib.version}" />
+		<!-- JSR Wrapper -->
+		<maven-jar-dl group-path="org/eclipse/jetty/websocket" artifact="javax-websocket-server-impl" version="${jetty.lib.version}" />
+		<maven-jar-sources-dl group-path="org/eclipse/jetty/websocket" artifact="javax-websocket-server-impl" version="${jetty.lib.version}" />
+		<maven-jar-javadoc-dl group-path="org/eclipse/jetty/websocket" artifact="javax-websocket-server-impl" version="${jetty.lib.version}" />
+		<!-- Servlet -->
+		<maven-jar-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-servlet" version="${jetty.lib.version}" />
+		<maven-jar-sources-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-servlet" version="${jetty.lib.version}" />
+		<maven-jar-javadoc-dl group-path="org/eclipse/jetty/websocket" artifact="websocket-servlet" version="${jetty.lib.version}" />
+	</target>
+
+	<target name="dependency.jetty.all">
+		<maven-jar-dl group-path="org/eclipse/jetty/aggregate" artifact="jetty-all" version="${jetty.lib.version}" extension="-uber" />
+	</target>
+
+	<target name="dependencies" depends="init.dependencies, dependency.jetty.websocket, dependency.jetty.all, dependency.properties" description="Downloads and compiles the dependencies.">
+	</target>
+		
+	<target name="javadoc" depends="init.docs" description="Builds the documentation.">
+        <javadoc access="protected" 
+        	additionalparam="-J-Xmx512m  " author="true" 
+        	classpath="${bin.dir}${S}${dev.base}/${jetty.jar}" 
+        	doctitle="${project.javadoc.title}" 
+        	sourcepath="${src.dir}" 
+        	packagenames="${project.javadoc.packages}"
+        	destdir="${docs.dir}" 
+        	splitindex="true" 
+        	use="true" 
+        	version="true" 
+        	nodeprecated="false" 
+        	nodeprecatedlist="false" 
+        	noindex="false" 
+        	nonavbar="false" 
+        	notree="false"
+    		>
+            <link href="https://docs.oracle.com/en/java/javase/11/docs/api/"/>
+        </javadoc>
+    </target>	
+
+</project>
