@@ -1,5 +1,8 @@
 package com.blackrook.small.jetty;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Configuration builder for the Jetty bootstrap.
  * @author Matthew Tropiano
@@ -16,7 +19,9 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	private String[] servletPaths;
 	private String[] applicationPackageRoots;
 	private boolean allowOptions;
-	private boolean allowTrace;	
+	private boolean allowTrace;
+	private boolean allowWebSockets;
+	private Map<String, Object> attributes;
 
 	private int maxThreads;
 	private int idleConnectionTimeout;
@@ -40,6 +45,8 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 		this.applicationPackageRoots = DEFAULT_PACKAGE_ROOTS;
 		this.allowOptions = false;
 		this.allowTrace = false;
+		this.allowWebSockets = true;
+		this.attributes = new HashMap<>();
 		
 		this.maxThreads = 50;
 		this.idleConnectionTimeout = 30000;
@@ -111,6 +118,12 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	}
 
 	@Override
+	public boolean allowWebSockets()
+	{
+		return allowWebSockets;
+	}
+
+	@Override
 	public int getMaxThreads()
 	{
 		return maxThreads;
@@ -168,6 +181,12 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	public SSLConfiguration getSSLConfiguration()
 	{
 		return sslConfiguration;
+	}
+	
+	@Override
+	public Object getAttribute(String attributeName, Object def)
+	{
+		return attributes.getOrDefault(attributeName, def);
 	}
 	
 	/**
@@ -255,6 +274,17 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	public SmallJettyConfigurationBuilder setAllowTrace(boolean value)
 	{
 		this.allowTrace = value;
+		return this;
+	}
+	
+	/**
+	 * @see #allowWebSockets() 
+	 * @param value the value to set.
+	 * @return this builder, for chaining.
+	 */
+	public SmallJettyConfigurationBuilder setAllowWebSockets(boolean value)
+	{
+		this.allowWebSockets = value;
 		return this;
 	}
 	
@@ -354,6 +384,19 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	public SmallJettyConfigurationBuilder setSendXPoweredBy(boolean value)
 	{
 		this.sendXPoweredBy = value;
+		return this;
+	}
+	
+	/**
+	 * @see #getAttribute(String) 
+	 * @see #getAttribute(String, Object) 
+	 * @param attributeName the attribute name.
+	 * @param value the value to set.
+	 * @return this builder, for chaining.
+	 */
+	public SmallJettyConfigurationBuilder setAttribute(String attributeName, Object value)
+	{
+		this.attributes.put(attributeName, value);
 		return this;
 	}
 	
@@ -549,5 +592,5 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 			return this;
 		}
 	}
-	
+
 }

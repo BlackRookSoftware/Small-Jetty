@@ -127,8 +127,9 @@ public final class SmallJettyBootstrap
 		server.setHandler(handlers);
 
 		// ==================== Websockets =======================
-
-		WebSocketServerContainerInitializer.initialize(context);
+		
+		if (config.allowWebSockets())
+			WebSocketServerContainerInitializer.initialize(context);
 
 		// =======================================================
 

@@ -90,7 +90,7 @@ public interface SmallJettyConfiguration extends SmallConfiguration
 	 */
     boolean getSendXPoweredBy();
 
-    /**
+	/**
      * @return the SSL configuration to use for SSL, or null for no secure socket setup. 
      */
     SSLConfiguration getSSLConfiguration();
