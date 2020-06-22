@@ -7,7 +7,7 @@ import java.util.Map;
  * Configuration builder for the Jetty bootstrap.
  * @author Matthew Tropiano
  */
-public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
+public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 {
 	private static final String[] DEFAULT_SERVLET_PATHS = new String[]{"/*"};
 	private static final String[] DEFAULT_PACKAGE_ROOTS = new String[0];
@@ -35,7 +35,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	
 	private SSLConfigurationBuilder sslConfiguration;
 
-	private SmallJettyConfigurationBuilder()
+	private DefaultSmallJettyConfiguration()
 	{
 		this.serverPort = 8080;
 		this.secureServerPort = null;
@@ -64,9 +64,9 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	/**
 	 * @return a new configuration builder.
 	 */
-	public static SmallJettyConfigurationBuilder configure()
+	public static DefaultSmallJettyConfiguration configure()
 	{
-		return new SmallJettyConfigurationBuilder();
+		return new DefaultSmallJettyConfiguration();
 	}
 	
 	@Override
@@ -194,7 +194,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setServerPort(int value)
+	public DefaultSmallJettyConfiguration setServerPort(int value)
 	{
 		this.serverPort = value;
 		return this;
@@ -205,7 +205,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setSecureServerPort(Integer value)
+	public DefaultSmallJettyConfiguration setSecureServerPort(Integer value)
 	{
 		this.secureServerPort = value;
 		return this;
@@ -216,7 +216,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setContextPath(String value)
+	public DefaultSmallJettyConfiguration setContextPath(String value)
 	{
 		this.contextPath = value;
 		return this;
@@ -227,7 +227,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setTempPath(String value)
+	public DefaultSmallJettyConfiguration setTempPath(String value)
 	{
 		this.tempPath = value;
 		return this;
@@ -238,7 +238,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setServletPaths(String... value)
+	public DefaultSmallJettyConfiguration setServletPaths(String... value)
 	{
 		this.servletPaths = value;
 		return this;
@@ -249,7 +249,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setApplicationPackageRoots(String... value)
+	public DefaultSmallJettyConfiguration setApplicationPackageRoots(String... value)
 	{
 		this.applicationPackageRoots = value;
 		return this;
@@ -260,7 +260,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setAllowOptions(boolean value)
+	public DefaultSmallJettyConfiguration setAllowOptions(boolean value)
 	{
 		this.allowOptions = value;
 		return this;
@@ -271,7 +271,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setAllowTrace(boolean value)
+	public DefaultSmallJettyConfiguration setAllowTrace(boolean value)
 	{
 		this.allowTrace = value;
 		return this;
@@ -282,7 +282,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setAllowWebSockets(boolean value)
+	public DefaultSmallJettyConfiguration setAllowWebSockets(boolean value)
 	{
 		this.allowWebSockets = value;
 		return this;
@@ -293,7 +293,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setMaxThreads(int value)
+	public DefaultSmallJettyConfiguration setMaxThreads(int value)
 	{
 		this.maxThreads = value;
 		return this;
@@ -304,7 +304,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setIdleConnectionTimeout(int value)
+	public DefaultSmallJettyConfiguration setIdleConnectionTimeout(int value)
 	{
 		this.idleConnectionTimeout = value;
 		return this;
@@ -315,7 +315,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setHeaderCacheSize(int value)
+	public DefaultSmallJettyConfiguration setHeaderCacheSize(int value)
 	{
 		this.headerCacheSize = value;
 		return this;
@@ -326,7 +326,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setOutputBufferSize(int value)
+	public DefaultSmallJettyConfiguration setOutputBufferSize(int value)
 	{
 		this.outputBufferSize = value;
 		return this;
@@ -337,7 +337,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setRequestHeaderSize(int value)
+	public DefaultSmallJettyConfiguration setRequestHeaderSize(int value)
 	{
 		this.requestHeaderSize = value;
 		return this;
@@ -348,7 +348,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setResponseHeaderSize(int value)
+	public DefaultSmallJettyConfiguration setResponseHeaderSize(int value)
 	{
 		this.responseHeaderSize = value;
 		return this;
@@ -359,7 +359,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setSendServerVersion(boolean value)
+	public DefaultSmallJettyConfiguration setSendServerVersion(boolean value)
 	{
 		this.sendServerVersion = value;
 		return this;
@@ -370,7 +370,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setSendDateHeader(boolean value)
+	public DefaultSmallJettyConfiguration setSendDateHeader(boolean value)
 	{
 		this.sendDateHeader = value;
 		return this;
@@ -381,7 +381,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setSendXPoweredBy(boolean value)
+	public DefaultSmallJettyConfiguration setSendXPoweredBy(boolean value)
 	{
 		this.sendXPoweredBy = value;
 		return this;
@@ -394,7 +394,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @param value the value to set.
 	 * @return this builder, for chaining.
 	 */
-	public SmallJettyConfigurationBuilder setAttribute(String attributeName, Object value)
+	public DefaultSmallJettyConfiguration setAttribute(String attributeName, Object value)
 	{
 		this.attributes.put(attributeName, value);
 		return this;
@@ -409,7 +409,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @return the SSL configuration.
 	 * @see #setSecureServerPort(Integer)
 	 */
-	public SmallJettyConfigurationBuilder useSSL(int port, String keyStorePath, String keyStorePassword)
+	public DefaultSmallJettyConfiguration useSSL(int port, String keyStorePath, String keyStorePassword)
 	{
 		return useSSL(port, "JKS", keyStorePath, keyStorePassword);
 	}
@@ -423,7 +423,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @return the SSL configuration.
 	 * @see #setSecureServerPort(Integer)
 	 */
-	public SmallJettyConfigurationBuilder useSSL(int port, String keyStoreType, String keyStorePath, String keyStorePassword)
+	public DefaultSmallJettyConfiguration useSSL(int port, String keyStoreType, String keyStorePath, String keyStorePassword)
 	{
 		return useSSL(port, "JKS", keyStorePath, keyStorePassword, "JKS", keyStorePath, keyStorePassword);
 	}
@@ -438,7 +438,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @return the SSL configuration.
 	 * @see #setSecureServerPort(Integer)
 	 */
-	public SmallJettyConfigurationBuilder useSSL(int port, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword)
+	public DefaultSmallJettyConfiguration useSSL(int port, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword)
 	{
 		return useSSL(port, "JKS", keyStorePath, keyStorePassword, "JKS", trustStorePath, trustStorePassword);
 	}
@@ -455,7 +455,7 @@ public class SmallJettyConfigurationBuilder implements SmallJettyConfiguration
 	 * @return the SSL configuration.
 	 * @see #setSecureServerPort(Integer)
 	 */
-	public SmallJettyConfigurationBuilder useSSL(int port, 
+	public DefaultSmallJettyConfiguration useSSL(int port, 
 		String keyStoreType, String keyStorePath, String keyStorePassword, 
 		String trustStoreType, String trustStorePath, String trustStorePassword
 	){

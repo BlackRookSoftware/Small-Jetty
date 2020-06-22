@@ -8,6 +8,7 @@ Copyright (c) 2020 Black Rook Software.
 
 ### Required Libraries
 
+[Black Rook Small](https://blackrooksoftware.github.io/Small)
 [Jetty 9.4.X+](https://www.eclipse.org/jetty/)  
 [Jetty Websocket Implementation 9.4.X+](https://www.eclipse.org/jetty/)
 
@@ -35,6 +36,10 @@ using Jetty as the server.
 
 
 ### Compiling with Ant
+
+To download dependencies for this project, type (`build.properties` will also be altered/created):
+
+	ant dependencies
 
 To compile this library with Apache Ant, type:
 

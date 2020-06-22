@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 <!-- ====================================================================== 
-     Black Rook Small Build File    
+     Black Rook Small Jetty Bootstrap Build File    
      Matt Tropiano                                                                
      ====================================================================== -->
 <project name="build" default="jar">
