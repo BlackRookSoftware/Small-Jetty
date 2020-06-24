@@ -15,7 +15,7 @@ may change many times in different ways over the course of its development!
 
 ### Required Libraries
 
-[Black Rook Small](https://blackrooksoftware.github.io/Small)
+[Black Rook Small](https://blackrooksoftware.github.io/Small)  
 [Jetty 9.4.X+](https://www.eclipse.org/jetty/)  
 [Jetty Websocket Implementation 9.4.X+](https://www.eclipse.org/jetty/)
 
@@ -28,7 +28,7 @@ may change many times in different ways over the course of its development!
 
 ### Introduction
 
-This library contains classes for J2EE application creation and management.
+This library enables using Jetty as the server for Small applications.
 
 
 ### Why?
