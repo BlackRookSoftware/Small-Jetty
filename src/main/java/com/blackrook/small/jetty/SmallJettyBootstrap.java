@@ -49,40 +49,40 @@ public final class SmallJettyBootstrap
 			throw new SmallFrameworkSetupException("Jetty is not available. Cannot find server class.");
 		}
 		
-        // ==================== Thread Pool ======================
+		// ==================== Thread Pool ======================
 
 		if (config.getMaxThreads() < 1)
 			throw new SmallFrameworkSetupException("Max threads is less than 1.");
 		
 		QueuedThreadPool threadPool = new QueuedThreadPool();
-        threadPool.setMaxThreads(config.getMaxThreads());
+		threadPool.setMaxThreads(config.getMaxThreads());
 
-        // =======================================================
+		// =======================================================
 
-        Server server = new Server(threadPool);
+		Server server = new Server(threadPool);
 
-        // ==================== HTTP Config ======================
+		// ==================== HTTP Config ======================
 
-        HttpConfiguration httpConfig = new HttpConfiguration();
-        if (config.getSecureServerPort() != null)
-        {
-        	if (config.getSSLConfiguration() == null)
-    			throw new SmallFrameworkSetupException("Secure port was provided without SSL config.");
-        	
-        	int securePort = config.getSecureServerPort();
-	        httpConfig.setSecureScheme("https");
-	        httpConfig.setSecurePort(securePort);
-        }
-        
-        httpConfig.setHeaderCacheSize(config.getHeaderCacheSize());
-        httpConfig.setOutputBufferSize(config.getOutputBufferSize());
-        httpConfig.setRequestHeaderSize(config.getRequestHeaderSize());
-        httpConfig.setResponseHeaderSize(config.getResponseHeaderSize());
-        httpConfig.setSendServerVersion(config.getSendServerVersion());
-        httpConfig.setSendDateHeader(config.getSendDateHeader());
-        httpConfig.setSendXPoweredBy(config.getSendXPoweredBy());
-        
-        ServerConnector httpConnector = new ServerConnector(server, new HttpConnectionFactory(httpConfig));
+		HttpConfiguration httpConfig = new HttpConfiguration();
+		if (config.getSecureServerPort() != null)
+		{
+			if (config.getSSLConfiguration() == null)
+				throw new SmallFrameworkSetupException("Secure port was provided without SSL config.");
+			
+			int securePort = config.getSecureServerPort();
+			httpConfig.setSecureScheme("https");
+			httpConfig.setSecurePort(securePort);
+		}
+		
+		httpConfig.setHeaderCacheSize(config.getHeaderCacheSize());
+		httpConfig.setOutputBufferSize(config.getOutputBufferSize());
+		httpConfig.setRequestHeaderSize(config.getRequestHeaderSize());
+		httpConfig.setResponseHeaderSize(config.getResponseHeaderSize());
+		httpConfig.setSendServerVersion(config.getSendServerVersion());
+		httpConfig.setSendDateHeader(config.getSendDateHeader());
+		httpConfig.setSendXPoweredBy(config.getSendXPoweredBy());
+		
+		ServerConnector httpConnector = new ServerConnector(server, new HttpConnectionFactory(httpConfig));
 		httpConnector.setPort(config.getServerPort());
 		httpConnector.setIdleTimeout(config.getIdleConnectionTimeout());
 		server.addConnector(httpConnector);
@@ -91,9 +91,9 @@ public final class SmallJettyBootstrap
 
 		if (config.getSSLConfiguration() != null)
 		{
-        	if (config.getSecureServerPort() == null)
-    			throw new SmallFrameworkSetupException("SSL config was provided without Secure port.");
-        	
+			if (config.getSecureServerPort() == null)
+				throw new SmallFrameworkSetupException("SSL config was provided without Secure port.");
+			
 			HttpConfiguration httpsConfig = new HttpConfiguration(httpConfig);
 			httpsConfig.addCustomizer(new SecureRequestCustomizer());
 			
@@ -114,7 +114,7 @@ public final class SmallJettyBootstrap
 			);
 			httpsConnector.setPort(config.getSecureServerPort());
 			server.addConnector(httpsConnector);
-        }
+		}
 		
 		// ================= Servlet Context =====================
 
@@ -127,9 +127,9 @@ public final class SmallJettyBootstrap
 		for (String servletPath : config.getServletPaths())
 			context.addServlet(holder, servletPath);
 		
-        // ===================== Handlers ========================
+		// ===================== Handlers ========================
 
-        HandlerCollection handlers = new HandlerCollection();
+		HandlerCollection handlers = new HandlerCollection();
 		handlers.setHandlers(new Handler[]{context, new DefaultHandler()});
 		server.setHandler(handlers);
 

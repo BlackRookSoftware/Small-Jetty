@@ -20,36 +20,36 @@ public interface SmallJettyConfiguration extends SmallConfiguration
 	 */
 	interface SSLConfiguration
 	{
-	    /**
+		/**
 		 * @return the keystore type name.
 		 */
-	    String getKeyStoreType();
+		String getKeyStoreType();
 
-	    /**
+		/**
 		 * @return the path to the SSL keystore file.
 		 */
-	    String getKeyStorePath();
+		String getKeyStorePath();
 
-	    /**
+		/**
 		 * @return the SSL keystore password.
 		 */
-	    String getKeyStorePassword();
+		String getKeyStorePassword();
 
-	    /**
+		/**
 		 * @return the truststore type name.
 		 */
-	    String getTrustStoreType();
+		String getTrustStoreType();
 
-	    /**
+		/**
 		 * @return the path to the SSL trust store file.
 		 */
-	    String getTrustStorePath();
+		String getTrustStorePath();
 
-	    /**
+		/**
 		 * @return the SSL trust store password.
 		 */
-	    String getTrustStorePassword();
-	    
+		String getTrustStorePassword();
+		
 	}
 	
 	/**
@@ -70,36 +70,36 @@ public interface SmallJettyConfiguration extends SmallConfiguration
 	/**
 	 * @return the output buffer cache size in bytes.
 	 */
-    int getOutputBufferSize();
-
-    /**
-	 * @return the request header cache size in bytes.
-	 */
-    int getRequestHeaderSize();
-
-    /**
-	 * @return the response header cache size in bytes.
-	 */
-    int getResponseHeaderSize();
-    
-    /**
-	 * @return true if the server version should be sent in headers/default pages, false if not.
-	 */
-    boolean getSendServerVersion();
-    
-    /**
-	 * @return true if the server date should be sent in headers/default pages, false if not.
-	 */
-    boolean getSendDateHeader();
-
-    /**
-	 * @return true if the server name should be sent in headers/default pages, false if not.
-	 */
-    boolean getSendXPoweredBy();
+	int getOutputBufferSize();
 
 	/**
-     * @return the SSL configuration to use for SSL, or null for no secure socket setup. 
-     */
-    SSLConfiguration getSSLConfiguration();
-    
+	 * @return the request header cache size in bytes.
+	 */
+	int getRequestHeaderSize();
+
+	/**
+	 * @return the response header cache size in bytes.
+	 */
+	int getResponseHeaderSize();
+	
+	/**
+	 * @return true if the server version should be sent in headers/default pages, false if not.
+	 */
+	boolean getSendServerVersion();
+	
+	/**
+	 * @return true if the server date should be sent in headers/default pages, false if not.
+	 */
+	boolean getSendDateHeader();
+
+	/**
+	 * @return true if the server name should be sent in headers/default pages, false if not.
+	 */
+	boolean getSendXPoweredBy();
+
+	/**
+	 * @return the SSL configuration to use for SSL, or null for no secure socket setup. 
+	 */
+	SSLConfiguration getSSLConfiguration();
+	
 }
