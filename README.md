@@ -7,12 +7,6 @@ Copyright (c) 2020 Black Rook Software.
 [Online Javadoc](https://blackrooksoftware.github.io/Small-Jetty/javadoc/)
 
 
-### NOTICE
-
-This library is currently in **EXPERIMENTAL** status. This library's API
-may change many times in different ways over the course of its development!
-
-
 ### Required Libraries
 
 [Black Rook Small 0.1.0+](https://blackrooksoftware.github.io/Small)  
