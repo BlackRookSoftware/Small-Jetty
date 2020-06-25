@@ -12,6 +12,30 @@ import java.util.Map;
 
 /**
  * Configuration builder for the Jetty bootstrap.
+ * <p>Defaults:
+ * <ul>
+ * 		<li><b>serverPort</b>: 8080</li>
+ * 		<li><b>secureServerPort</b>: NONE</li>
+ * 		<li><b>contextPath</b>: "/"</li>
+ * 		<li><b>tempPath</b>: null</li>
+ * 		<li><b>servletPaths</b>: ["/*"]</li>
+ * 		<li><b>applicationPackageRoots</b>: [ ]</li>
+ * 		<li><b>allowOptions</b>: false</li>
+ * 		<li><b>allowTrace</b>: false</li>
+ * 		<li><b>allowWebSockets</b>: true</li>
+ * 		<li><b>autoParseMultipart</b>: true</li>
+ * 		<li><b>attributes</b>: NONE</li>
+ * 		<li><b>maxThreads</b>: 20</li>
+ * 		<li><b>idleConnectionTimeout</b>: 30000</li>
+ * 		<li><b>headerCacheSize</b>: 8192</li>
+ * 		<li><b>outputBufferSize</b>: 32768</li>
+ * 		<li><b>requestHeaderSize</b>: 8192</li>
+ * 		<li><b>responseHeaderSize</b>: 8192</li>
+ * 		<li><b>sendServerVersion</b>: false</li>
+ * 		<li><b>sendDateHeader</b>: false</li>
+ * 		<li><b>sendXPoweredBy</b>: false</li>
+ * 		<li><b>sslConfiguration</b>: NONE</li>
+ * </ul>
  * @author Matthew Tropiano
  */
 public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
@@ -28,6 +52,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	private boolean allowOptions;
 	private boolean allowTrace;
 	private boolean allowWebSockets;
+	private boolean autoParseMultipart;
 	private Map<String, Object> attributes;
 
 	private int maxThreads;
@@ -53,9 +78,10 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 		this.allowOptions = false;
 		this.allowTrace = false;
 		this.allowWebSockets = true;
+		this.autoParseMultipart = true;
 		this.attributes = new HashMap<>();
 		
-		this.maxThreads = 50;
+		this.maxThreads = 20;
 		this.idleConnectionTimeout = 30000;
 		this.headerCacheSize = 8192;
 		this.outputBufferSize = 32768;
@@ -128,6 +154,12 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	public boolean allowWebSockets()
 	{
 		return allowWebSockets;
+	}
+
+	@Override
+	public boolean autoParseMultipart()
+	{
+		return autoParseMultipart;
 	}
 
 	@Override
@@ -292,6 +324,17 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	public DefaultSmallJettyConfiguration setAllowWebSockets(boolean value)
 	{
 		this.allowWebSockets = value;
+		return this;
+	}
+	
+	/**
+	 * @see #autoParseMultipart() 
+	 * @param value the value to set.
+	 * @return this builder, for chaining.
+	 */
+	public DefaultSmallJettyConfiguration setAutoParseMultipart(boolean value)
+	{
+		this.autoParseMultipart = value;
 		return this;
 	}
 	
