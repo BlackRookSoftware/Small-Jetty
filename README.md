@@ -11,8 +11,19 @@ Copyright (c) 2020 Black Rook Software.
 
 [Black Rook Small 1.0.0+](https://blackrooksoftware.github.io/Small)  
 [Jetty 9.4.X+](https://www.eclipse.org/jetty/)  
-[Jetty Websocket Implementation 9.4.X+](https://www.eclipse.org/jetty/)
+* Jetty Http
+* Jetty Server
+* Jetty Servlet
+* Jetty Util
 
+[Jetty Websocket Implementation 9.4.X+](https://www.eclipse.org/jetty/)  
+* Jetty Websocket API
+* Jetty Websocket Common
+* Jetty Websocket Server
+* Jetty Websocket Servlet
+* Jetty Websocket Server Implementation
+
+The above Jetty components are for building - you are better off pulling the full Jetty implementation for runtime.
 
 ### Required Java Modules
 
