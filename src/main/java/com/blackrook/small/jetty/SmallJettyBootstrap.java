@@ -35,7 +35,7 @@ import com.blackrook.small.jetty.SmallJettyConfiguration.SSLConfiguration;
 public final class SmallJettyBootstrap
 {
 	/**
-	 * Starts Jetty using the provided configuration and returns the server.
+	 * Starts Jetty using the provided configuration.
 	 * @param config the configuration to use.
 	 * @throws SmallFrameworkSetupException if Jetty is not available nor on the classpath, or some other error occurs.
 	 * @throws InterruptedException if waiting for the server to stop was interrupted.
