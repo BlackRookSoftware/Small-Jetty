@@ -223,9 +223,10 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	}
 	
 	@Override
-	public Object getAttribute(String attributeName, Object def)
+	@SuppressWarnings("unchecked")
+	public <T> T getAttribute(String attributeName, T def)
 	{
-		return attributes.getOrDefault(attributeName, def);
+		return (T)attributes.getOrDefault(attributeName, def);
 	}
 	
 	/**
