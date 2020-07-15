@@ -32,7 +32,7 @@
 	<property name="jetty.websocket.server.wrapper.jar" value="javax-websocket-server-impl-${jetty.lib.version}.jar" />
 	<property name="jetty.websocket.servlet.jar" value="websocket-servlet-${jetty.lib.version}.jar" />
 
-	<property name="small.lib.version" value="1.0.0" />
+	<property name="small.lib.version" value="1.4.1" />
 	<property name="small.tag" value="${small.lib.version}-RELEASE" />
 	<property name="small.project" value="blackrook-small-${small.lib.version}" />	
 	<property name="small.jar" value="${small.project}.jar" />
