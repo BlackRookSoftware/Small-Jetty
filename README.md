@@ -9,7 +9,7 @@ Copyright (c) 2020 Black Rook Software.
 
 ### Required Libraries
 
-[Black Rook Small 1.0.0+](https://blackrooksoftware.github.io/Small)  
+[Black Rook Small 1.4.1+](https://blackrooksoftware.github.io/Small)  
 [Jetty 9.4.X+](https://www.eclipse.org/jetty/)  
 * Jetty Http
 * Jetty Server
