@@ -15,7 +15,7 @@ import java.util.Map;
  * <p>Defaults:
  * <ul>
  * 		<li><b>serverPort</b>: 8080</li>
- * 		<li><b>secureServerPort</b>: NONE</li>
+ * 		<li><b>secureServerPort</b>: null</li>
  * 		<li><b>contextPath</b>: "/"</li>
  * 		<li><b>tempPath</b>: null</li>
  * 		<li><b>servletPaths</b>: ["/*"]</li>
@@ -34,7 +34,9 @@ import java.util.Map;
  * 		<li><b>sendServerVersion</b>: false</li>
  * 		<li><b>sendDateHeader</b>: false</li>
  * 		<li><b>sendXPoweredBy</b>: false</li>
- * 		<li><b>sslConfiguration</b>: NONE</li>
+ * 		<li><b>servletContextOptions</b>: 0</li>
+ * 		<li><b>sslConfiguration</b>: null</li>
+ * 		<li><b>gzipConfiguration</b>: null</li>
  * </ul>
  * @author Matthew Tropiano
  */
@@ -66,6 +68,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	private boolean sendXPoweredBy;
 	
 	private SSLConfigurationBuilder sslConfiguration;
+	private GZipConfiguration gzipConfiguration;
 
 	private DefaultSmallJettyConfiguration()
 	{
@@ -92,6 +95,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 		this.sendXPoweredBy = false;
 		
 		this.sslConfiguration = null;
+		this.gzipConfiguration = null;
 	}
 	
 	/**
@@ -217,9 +221,21 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	}
 
 	@Override
+	public int getServletContextOptions()
+	{
+		return 0;
+	}
+
+	@Override
 	public SSLConfiguration getSSLConfiguration()
 	{
 		return sslConfiguration;
+	}
+	
+	@Override
+	public GZipConfiguration getGZipCompression()
+	{
+		return gzipConfiguration;
 	}
 	
 	@Override
@@ -457,7 +473,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	 * @param port the secure HTTP server port.
 	 * @param keyStorePath the keystore/truststore path.
 	 * @param keyStorePassword the keystore/truststore password.
-	 * @return the SSL configuration.
+	 * @return this builder, for chaining.
 	 * @see #setSecureServerPort(Integer)
 	 */
 	public DefaultSmallJettyConfiguration useSSL(int port, String keyStorePath, String keyStorePassword)
@@ -471,7 +487,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	 * @param keyStoreType the keystore/truststore type. 
 	 * @param keyStorePath the keystore/truststore path.
 	 * @param keyStorePassword the keystore/truststore password.
-	 * @return the SSL configuration.
+	 * @return this builder, for chaining.
 	 * @see #setSecureServerPort(Integer)
 	 */
 	public DefaultSmallJettyConfiguration useSSL(int port, String keyStoreType, String keyStorePath, String keyStorePassword)
@@ -486,7 +502,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	 * @param keyStorePassword the keystore password.
 	 * @param trustStorePath the truststore path.
 	 * @param trustStorePassword the truststore password.
-	 * @return the SSL configuration.
+	 * @return this builder, for chaining.
 	 * @see #setSecureServerPort(Integer)
 	 */
 	public DefaultSmallJettyConfiguration useSSL(int port, String keyStorePath, String keyStorePassword, String trustStorePath, String trustStorePassword)
@@ -503,7 +519,7 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 	 * @param trustStoreType the truststore type. 
 	 * @param trustStorePath the truststore path.
 	 * @param trustStorePassword the truststore password.
-	 * @return the SSL configuration.
+	 * @return this builder, for chaining.
 	 * @see #setSecureServerPort(Integer)
 	 */
 	public DefaultSmallJettyConfiguration useSSL(int port, 
@@ -519,6 +535,17 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 			.setTrustStorePath(trustStorePath)
 			.setTrustStorePassword(trustStorePassword)
 		;
+		return this;
+	}
+	
+	/**
+	 * Sets the GZip handler configuration for this application.
+	 * @param gzip the GZip configuration.
+	 * @return this builder, for chaining.
+	 */
+	public DefaultSmallJettyConfiguration setGZip(GZipConfiguration gzip)
+	{
+		this.gzipConfiguration = gzip;
 		return this;
 	}
 	
@@ -644,4 +671,225 @@ public class DefaultSmallJettyConfiguration implements SmallJettyConfiguration
 		}
 	}
 
+	public static class GZipConfigurationBuilder implements GZipConfiguration
+	{
+		private int bufferSize;
+		private int compressionLevel;
+		private int minGzipSize;
+		private String[] excludedAgentPatterns;
+		private String[] excludedHTTPMethods;
+		private String[] excludedMimeTypes;
+		private String[] excludedPaths;
+		private String[] includedAgentPatterns;
+		private String[] includedHTTPMethods;
+		private String[] includedMimeTypes;
+		private String[] includedPaths;
+
+		public static GZipConfigurationBuilder gzip()
+		{
+			return new GZipConfigurationBuilder();
+		}
+		
+		private GZipConfigurationBuilder()
+		{
+			this.bufferSize = 16384;
+			this.compressionLevel = 9;
+			this.minGzipSize = 2048;
+			this.excludedAgentPatterns = null;
+			this.excludedHTTPMethods = null;
+			this.excludedMimeTypes = null;
+			this.excludedPaths = null;
+			this.includedAgentPatterns = null;
+			this.includedHTTPMethods = null;
+			this.includedMimeTypes = null;
+			this.includedPaths = null;
+		}
+		
+		@Override
+		public int getBufferSize()
+		{
+			return bufferSize;
+		}
+
+		@Override
+		public int getCompressionLevel()
+		{
+			return compressionLevel;
+		}
+
+		@Override
+		public int getMinGzipSize()
+		{
+			return minGzipSize;
+		}
+
+		@Override
+		public String[] getExcludedAgentPatterns()
+		{
+			return excludedAgentPatterns;
+		}
+
+		@Override
+		public String[] getExcludedHTTPMethods()
+		{
+			return excludedHTTPMethods;
+		}
+
+		@Override
+		public String[] getExcludedMimeTypes()
+		{
+			return excludedMimeTypes;
+		}
+
+		@Override
+		public String[] getExcludedPaths()
+		{
+			return excludedPaths;
+		}
+
+		@Override
+		public String[] getIncludedAgentPatterns()
+		{
+			return includedAgentPatterns;
+		}
+
+		@Override
+		public String[] getIncludedHTTPMethods()
+		{
+			return includedHTTPMethods;
+		}
+
+		@Override
+		public String[] getIncludedMimeTypes()
+		{
+			return includedMimeTypes;
+		}
+
+		@Override
+		public String[] getIncludedPaths()
+		{
+			return includedPaths;
+		}
+
+		/**
+		 * @see #getBufferSize() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setBufferSize(int value)
+		{
+			bufferSize = value;
+			return this;
+		}
+
+		/**
+		 * @see #getCompressionLevel() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setCompressionLevel(int value)
+		{
+			compressionLevel = value;
+			return this;
+		}
+
+		/**
+		 * @see #getMinGzipSize() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setMinGzipSize(int value)
+		{
+			minGzipSize = value;
+			return this;
+		}
+
+		/**
+		 * @see #getExcludedAgentPatterns() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setExcludedAgentPatterns(String... value)
+		{
+			excludedAgentPatterns = value;
+			return this;
+		}
+
+		/**
+		 * @see #getExcludedHTTPMethods() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setExcludedHTTPMethods(String... value)
+		{
+			excludedHTTPMethods = value;
+			return this;
+		}
+
+		/**
+		 * @see #getExcludedMimeTypes() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setExcludedMimeTypes(String... value)
+		{
+			excludedMimeTypes = value;
+			return this;
+		}
+
+		/**
+		 * @see #getExcludedPaths() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setExcludedPaths(String... value)
+		{
+			excludedPaths = value;
+			return this;
+		}
+
+		/**
+		 * @see #getIncludedAgentPatterns() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setIncludedAgentPatterns(String... value)
+		{
+			includedAgentPatterns = value;
+			return this;
+		}
+
+		/**
+		 * @see #getIncludedHTTPMethods() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setIncludedHTTPMethods(String... value)
+		{
+			includedHTTPMethods = value;
+			return this;
+		}
+
+		/**
+		 * @see #getIncludedMimeTypes() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setIncludedMimeTypes(String... value)
+		{
+			includedMimeTypes = value;
+			return this;
+		}
+
+		/**
+		 * @see #getIncludedPaths() 
+		 * @param value the value to set.
+		 * @return this builder, for chaining.
+		 */
+		public GZipConfigurationBuilder setIncludedPaths(String... value)
+		{
+			includedPaths = value;
+			return this;
+		}
+	}
 }

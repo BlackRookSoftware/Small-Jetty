@@ -8,15 +8,13 @@
 package com.blackrook.small.jetty;
 
 import org.eclipse.jetty.http.HttpVersion;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
-import org.eclipse.jetty.server.handler.DefaultHandler;
-import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
@@ -26,6 +24,7 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 import com.blackrook.small.SmallConstants;
 import com.blackrook.small.SmallServlet;
 import com.blackrook.small.exception.SmallFrameworkSetupException;
+import com.blackrook.small.jetty.SmallJettyConfiguration.GZipConfiguration;
 import com.blackrook.small.jetty.SmallJettyConfiguration.SSLConfiguration;
 
 /**
@@ -41,7 +40,7 @@ public final class SmallJettyBootstrap
 	 * @throws InterruptedException if waiting for the server to stop was interrupted.
 	 * @throws Exception if Jetty could not be started.
 	 */
-	public static void create(SmallJettyConfiguration config) throws Exception
+	public static Server create(SmallJettyConfiguration config) throws Exception
 	{
 		try {
 			Class.forName("org.eclipse.jetty.server.Server");
@@ -118,7 +117,7 @@ public final class SmallJettyBootstrap
 		
 		// ================= Servlet Context =====================
 
-		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		ServletContextHandler context = new ServletContextHandler(config.getServletContextOptions());
 		context.setAttribute(SmallConstants.SMALL_APPLICATION_CONFIGURATION_ATTRIBUTE, config);
 		
 		ServletHolder holder = new ServletHolder(new SmallServlet());
@@ -129,9 +128,33 @@ public final class SmallJettyBootstrap
 		
 		// ===================== Handlers ========================
 
-		HandlerCollection handlers = new HandlerCollection();
-		handlers.setHandlers(new Handler[]{context, new DefaultHandler()});
-		server.setHandler(handlers);
+		server.insertHandler(context);
+
+		GZipConfiguration gzipConfig;
+		if ((gzipConfig = config.getGZipCompression()) != null)
+		{
+			GzipHandler gzipHandler = new GzipHandler();
+			gzipHandler.setInflateBufferSize(gzipConfig.getBufferSize());
+			gzipHandler.setCompressionLevel(gzipConfig.getCompressionLevel());
+			gzipHandler.setMinGzipSize(gzipConfig.getMinGzipSize());
+			if (gzipConfig.getExcludedAgentPatterns() != null)
+				gzipHandler.setExcludedAgentPatterns(gzipConfig.getExcludedAgentPatterns());
+			if (gzipConfig.getExcludedHTTPMethods() != null)
+				gzipHandler.setExcludedMethods(gzipConfig.getExcludedHTTPMethods());
+			if (gzipConfig.getExcludedMimeTypes() != null)
+				gzipHandler.setExcludedMimeTypes(gzipConfig.getExcludedMimeTypes());
+			if (gzipConfig.getExcludedPaths() != null)
+				gzipHandler.setExcludedPaths(gzipConfig.getExcludedPaths());
+			if (gzipConfig.getIncludedAgentPatterns() != null)
+				gzipHandler.setIncludedAgentPatterns(gzipConfig.getIncludedAgentPatterns());
+			if (gzipConfig.getIncludedHTTPMethods() != null)
+				gzipHandler.setIncludedMethods(gzipConfig.getIncludedHTTPMethods());
+			if (gzipConfig.getIncludedMimeTypes() != null)
+				gzipHandler.setIncludedMimeTypes(gzipConfig.getIncludedMimeTypes());
+			if (gzipConfig.getIncludedPaths() != null)
+				gzipHandler.setIncludedPaths(gzipConfig.getIncludedPaths());
+			server.insertHandler(gzipHandler);
+		}
 
 		// ==================== Websockets =======================
 		
@@ -141,6 +164,7 @@ public final class SmallJettyBootstrap
 		// =======================================================
 
 		server.start();
+		return server;
 	}
 	
 }

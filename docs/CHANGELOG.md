@@ -3,6 +3,12 @@ Small Jetty Bootstrap (C) Black Rook Software 2020
 by Matt Tropiano et al. (see AUTHORS.txt)
 
 
+Changed in 1.5.3
+----------------
+
+- `Added` More Jetty configuration options.
+
+
 Changed in 1.4.1
 ----------------
 

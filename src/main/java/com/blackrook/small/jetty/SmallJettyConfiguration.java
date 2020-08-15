@@ -7,6 +7,8 @@
  ******************************************************************************/
 package com.blackrook.small.jetty;
 
+import org.eclipse.jetty.servlet.ServletContextHandler;
+
 import com.blackrook.small.SmallConfiguration;
 
 /**
@@ -50,6 +52,68 @@ public interface SmallJettyConfiguration extends SmallConfiguration
 		 */
 		String getTrustStorePassword();
 		
+	}
+	
+	/**
+	 * Configuration for GZipping client content.
+	 * @since 1.5.3
+	 */
+	interface GZipConfiguration
+	{
+		/**
+		 * @return the GZip buffer size in bytes.
+		 */
+		int getBufferSize();
+
+		/**
+		 * @return the GZip compression level.
+		 */
+		int getCompressionLevel();
+
+		/**
+		 * @return the minimum size in bytes that a response needs to be before compression is considered.
+		 */
+		int getMinGzipSize();
+		
+		/**
+		 * @return the list of incoming agent patterns excluded from compression.
+		 */
+		String[] getExcludedAgentPatterns();
+
+		/**
+		 * @return the list of HTTP methods excluded from compression.
+		 */
+		String[] getExcludedHTTPMethods();
+
+		/**
+		 * @return the list of MIME-Types excluded from compression.
+		 */
+		String[] getExcludedMimeTypes();
+
+		/**
+		 * @return the list of excluded URI path patterns from compression.
+		 */
+		String[] getExcludedPaths();
+
+		/**
+		 * @return the list of incoming agent patterns included from compression.
+		 */
+		String[] getIncludedAgentPatterns();
+
+		/**
+		 * @return the list of HTTP methods included from compression.
+		 */
+		String[] getIncludedHTTPMethods();
+
+		/**
+		 * @return the list of MIME-Types included from compression.
+		 */
+		String[] getIncludedMimeTypes();
+
+		/**
+		 * @return the list of included URI path patterns from compression.
+		 */
+		String[] getIncludedPaths();
 	}
 	
 	/**
@@ -98,8 +162,23 @@ public interface SmallJettyConfiguration extends SmallConfiguration
 	boolean getSendXPoweredBy();
 
 	/**
+	 * @return the Jetty options to pass to the servlet context handler.
+	 * @see ServletContextHandler#SESSIONS
+	 * @see ServletContextHandler#SECURITY
+	 * @see ServletContextHandler#GZIP
+	 * @since 1.5.3
+	 */
+	int getServletContextOptions();
+
+	/**
 	 * @return the SSL configuration to use for SSL, or null for no secure socket setup. 
 	 */
 	SSLConfiguration getSSLConfiguration();
+	
+	/**
+	 * @return the GZip configuration to use, or null for no compression scheme.
+	 * @since 1.5.3
+	 */
+	GZipConfiguration getGZipCompression();
 	
 }
