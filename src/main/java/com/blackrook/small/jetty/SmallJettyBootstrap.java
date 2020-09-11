@@ -36,6 +36,7 @@ public final class SmallJettyBootstrap
 	/**
 	 * Starts Jetty using the provided configuration.
 	 * @param config the configuration to use.
+	 * @return the Server created.
 	 * @throws SmallFrameworkSetupException if Jetty is not available nor on the classpath, or some other error occurs.
 	 * @throws InterruptedException if waiting for the server to stop was interrupted.
 	 * @throws Exception if Jetty could not be started.
